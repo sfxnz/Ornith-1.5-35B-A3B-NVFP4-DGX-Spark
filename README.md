@@ -53,7 +53,7 @@ Container on spark1: `ornith-1.5-35b-nvfp4-official`. Live run used `:latest`; r
 ```bash
 docker run -d --name ornith-1.5-35b-nvfp4-official \
   --gpus all -p 8000:8000 -e HF_TOKEN="$HF_TOKEN" \
-  -v /home/sfxnz/.cache/huggingface:/root/.cache/huggingface \
+  -v "$HOME/.cache/huggingface:/root/.cache/huggingface" \
   vllm/vllm-openai@sha256:0a51ea5b4ae2dc5d81890e5173f54203d2a3ae0cfffe51b8fd2afd4391bfd967 \
   ornith-ai/Ornith-1.5-35B-A3B-NVFP4 \
   --host 0.0.0.0 --port 8000 --tensor-parallel-size 1 --trust-remote-code \
@@ -66,7 +66,7 @@ docker run -d --name ornith-1.5-35b-nvfp4-official \
   --tool-call-parser qwen3_xml --enable-auto-tool-choice
 ```
 
-On your own box, swap the HF cache bind to `"$HOME/.cache/huggingface:/root/.cache/huggingface"`.
+`./run.sh` binds `$HF_CACHE` (default `$HOME/.cache/huggingface`).
 
 Wait until `GET /health` is 200 and `GET /v1/models` lists the model. This load: weights 21.99 GiB in 24.7 s; engine init ~148 s.
 
